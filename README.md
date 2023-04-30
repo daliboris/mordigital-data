@@ -1,2 +1,3 @@
-# mordigital-data
-Data repository for MorDigital-Publisher project
+# MORDigital Data
+
+Data repository for MORDigital TEI Publisher application
