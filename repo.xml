@@ -1,0 +1,22 @@
+<meta xmlns="http://exist-db.org/xquery/repo">
+    <description>António Morais de Silva, Diccionario da Lingua Portugueza: data</description>
+    <author>Boris Lehečka</author>
+    <website>https://mordigital.fcsh.unl.pt/</website>
+    <status>beta</status>
+    <license>GNU-LGPL</license>
+    <copyright>true</copyright>
+    <type>library</type>
+    <prepare>pre-install.xql</prepare>
+    <finish>post-install.xql</finish>
+    <target>mordigital-data</target>
+    <permissions user="mordigital" group="tei" mode="rw-r--r--" />
+    <deployed />
+    <changelog>
+        <change version="0.1">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>default fileds and facets for TEI Lex-0 dictionaries</li>
+                <li>default implementation of the Lucene module for indexing TEI Lex-0 dictionaries</li>
+            </ul>
+        </change>
+    </changelog>
+</meta>

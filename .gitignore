@@ -1,0 +1,17 @@
+# build directory with generated eXist-db module
+build
+
+# build properties for local settings
+local.build.properties
+
+# worskapce file used by Visual Studio Code
+*.code-workspace
+
+# directory with settings used by Visual Studio Code
+.vscode
+
+# file used by existdb-vscode (https://marketplace.visualstudio.com/items?itemName=eXist-db.existdb-vscode) add-in for the files synchronization with eXist-db
+.existdb.json
+
+# setting files used by xst command line tool (https://github.com/eXist-db/xst)
+*.xstrc

@@ -1,0 +1,21 @@
+<project name="lediir" default="xar">
+    <xmlproperty file="expath-pkg.xml" /> <!-- Adjust path below to match location of your npm binary -->
+    <property name="project.version" value="${package(version)}" /> <!-- Defined in expath-pkg.xml file -->
+    <property name="project.app" value="${package(abbrev)}" /> <!-- Defined in expath-pkg.xml file -->
+    <property name="build.dir" value="build" /> <!-- Name of the directory where the generated eXist-db module will be saved -->
+    <!-- 
+      Additional properties, if needed, can be defined 
+      in this file
+      in build.properties file and ovewritten/redefined in local.build.properties file 
+    -->
+    <target name="clean"> <!-- Deleting build directory and its content -->
+        <echo message="Deleting ${build} directory" />
+        <delete dir="${build}" />
+    </target>
+    <target name="xar"> <!-- Building the eXist-db module (with .xar extension)  -->
+     <mkdir dir="${build.dir}" />
+     <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir} ${build.dir}/* build.xml *.build.properties build.properties .gitignore .existdb.json *.xstrc *.code-workspace" />
+     <!-- Creating copy of the latest version of the module with the fixed filename  -->
+     <copy file="${build.dir}/${project.app}-${project.version}.xar" tofile="${build.dir}/${project.app}.xar" overwrite="true"/>
+    </target>
+</project>
