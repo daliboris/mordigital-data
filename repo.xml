@@ -12,7 +12,7 @@
     <permissions user="mordigital" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
-        <change version="0.1">
+        <change version="0.1.0">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>default fileds and facets for TEI Lex-0 dictionaries</li>
                 <li>default implementation of the Lucene module for indexing TEI Lex-0 dictionaries</li>
