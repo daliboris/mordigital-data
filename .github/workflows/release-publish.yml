@@ -26,9 +26,14 @@ jobs:
           distribution: 'temurin'
       - name: Build with Ant
         run: ant -noinput -buildfile build.xml
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: BuildFiles_${{ github.ref }}
+          path: build_files/
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: MORDigital Data ${{ github.ref }}
-          files: /mordigital-data/build/*.xar
+          files: build_files/*.xar
           fail_on_unmatched_files: true
