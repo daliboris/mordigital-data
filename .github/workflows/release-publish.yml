@@ -24,6 +24,10 @@ jobs:
         distribution: 'temurin'
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
+    - name: Uploading build
+      uses: actions/upload-artifact@v3
+      with:
+        path: build
 
   
   release:
@@ -38,4 +42,4 @@ jobs:
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: *.xar
+          files: /*.xar
