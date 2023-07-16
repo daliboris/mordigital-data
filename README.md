@@ -1,6 +1,30 @@
 # MORDigital Data
 
-Data repository for MORDigital TEI Publisher application
+Data repository for **MORDigital Data** application.
+
+This application, an installable module for [eXist-db](https://exist-db.org/) database, contains basic structure for data: subdirectories `dictionaries` and `about` in the `data` directory. Furthermore it contains definition of indexes for searching and facets (`collection.xconf`) and a module in XQeury (`index-xql`) used in the process of indexing XML documents. There is also another module (`modules/report.xql`) witch retrieves metadata and data about defined search fields and facets and their content.
+
+*MORDigital Data* module is used by **MORDigital Web Application** to store and deliver dictionary data.
+
+## Instalation
+
+### Prerequsities
+
+- [eXist-db](https://exist-db.org)  [eXist-db 6.2.0](https://github.com/eXist-db/exist/releases/tag/eXist-6.2.0) or [later](https://github.com/eXist-db/exist/releases/latest)
+
+You can follow instruction from the [TEI Publisher](https://github.com/eeditiones/tei-publisher-app#installation) repository.
+
+A prebuilt version of the app can be downloaded from this [repository](/relases/latest) and installed.
+
+### Installation with Package Manager
+
+On your eXist-db instance, open the package manager in the dashboard and move downloaded **MORDigital Data** on the `DROPZONE - put your package(s) here.` text, or hit `Upload` button and select downloaded file from your local directory. This should automatically install dependencies such as the **TEI Publisher: Processing Model Libraries**.
+
+![Package Manager](docs/images/eXist-db-PackageManager-install-module.png)
+
+After installing the **MORDigital Data** application an eXist-db library called *António Morais de Silva, Diccionario da Lingua Portugueza: data* will show in the *Package Manager*.
+
+## Development
 
 If you want change the name of this eXist-db module do it in this places:
 
@@ -12,7 +36,7 @@ If you want change the name of this eXist-db module do it in this places:
   - `<changelog>`
 - `expath-pkg.xml`
   - `<package>`
-    - @abbrev 
+    - @abbrev
     - @name
     - @version
   - `<title>`
