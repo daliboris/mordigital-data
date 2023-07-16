@@ -24,6 +24,54 @@ On your eXist-db instance, open the package manager in the dashboard and move do
 
 After installing the **MORDigital Data** application an eXist-db library called *António Morais de Silva, Diccionario da Lingua Portugueza: data* will show in the *Package Manager*.
 
+## Features
+
+**MORDigital Data** library supports search in the following parts of TEI Lex-0 encoded dictionary:
+
+### Fields
+
+| Name | XPath | Note |
+| ---- | ----- |----- |
+|lemma|`form[@type='lemma']`||
+|definition|`def`||
+|example|`cit[@type='example']`||
+|pos|`gram[@type='pos']`||
+|gloss|`gloss`||
+
+### Facets
+
+| Name | XPath | Note |
+| ---- | ----- |----- |
+|dictionary|`title[@type='main']`||
+|objectLanguage|`orth/@xml:lang`||
+|pos|`gram[@type='pos']`||
+|polysemy|`count(sense)`||
+|entry-type|`entry/@type`||
+|attitude|`usg[@type='attitude']`||
+|domain|`usg[@type='domain']`||
+|frequency|`usg[@type='frequency']`||
+|geographic|`usg[@type='geographic']`||
+|hint|`usg[@type='hint']`||
+|meaningType|`usg[@type='meaningType']`||
+|normativity|`usg[@type='normativity']`||
+|socioCultural|`usg[@type='socioCultural']`||
+|textType|`usg[@type='textType']`||
+|time|`usg[@type='time']`||
+|attestation|`bibl[@type='attestation']`||
+|attestation-author|`bibl[@type='attestation']/author`||
+|attestation-title|`bibl[@type=attestation]/title`||
+|metamark|`metamark/@function`||
+
+### Fileds used for the application functionality
+
+| Name | XPath | Note |
+| ---- | ----- |----- |
+|sortKey|`entry/@sortKey`||
+|letter|`head[@type='letter']`||
+|chapter-id|`chapter/@xml:id`||
+|chapter|`div[@type='letter']/@n`||
+
+
 ## Development
 
 If you want change the name of this eXist-db module do it in this places:
