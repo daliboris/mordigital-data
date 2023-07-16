@@ -30,5 +30,5 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           name: MORDigital Data ${{ github.ref }}
-          files: /build/*.xar
+          files: /mordigital-data/build/*.xar
           fail_on_unmatched_files: true
