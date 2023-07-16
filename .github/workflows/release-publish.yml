@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Ant
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
 
-name: eXist-db module build and relaease
+name: Release MORDigital Data eXist-db module
 
 on:
   push:
@@ -29,10 +29,11 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: /home/runner/work/mordigital-data/mordigital-data/build/
+          name: ${{ github.event.repository.name }}.xar # = mordigital-data
+          path: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/build/${{ github.event.repository.name }}.xar
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          name: MORDigital Data ${{ github.ref }} ${{ github.event.repository.name }}
-          files: /*.xar
+          name: MORDigital Data  ${{ github.event.repository.name }}
+          files: ${{ github.event.repository.name }}.xar
           fail_on_unmatched_files: true
