@@ -29,11 +29,11 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: BuildFiles_${{ github.ref }}
-          path: build_files/
+          name: BuildFiles_${{ github.path }}
+          path: /home/runner/work/mordigital-data/mordigital-data/build/
       - name: GH Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          name: MORDigital Data ${{ github.ref }}
-          files: build_files/*.xar
+          name: MORDigital Data ${{ github.ref }} ${{ github.event.repository.name }}
+          files: /home/runner/work/mordigital-data/mordigital-data/build/*.xar
           fail_on_unmatched_files: true
