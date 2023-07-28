@@ -1,4 +1,4 @@
-<package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.1.0" name="https://mordigital.fcsh.unl.pt/mordigital-data" abbrev="mordigital-data">
+<package xmlns="http://expath.org/ns/pkg" spec="1.0" version="0.1.1" name="https://mordigital.fcsh.unl.pt/mordigital-data" abbrev="mordigital-data">
  <title>António Morais de Silva, Diccionario da Lingua Portugueza: data</title>
  <home>https://mordigital.fcsh.unl.pt/</home>
  <dependency processor="http://exist-db.org" semver-min="6.2.0"/>
