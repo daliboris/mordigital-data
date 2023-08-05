@@ -30,18 +30,20 @@
    </text>
    <text qname="tei:entry">
     <!--
+      Namining rules:
+
       name of the field = simple, user friendly (can be in the URL)
       name of the facet = simple, user friendly (can be in the URL)
-      name of the parameter nav:get-metadata function: XPath-like
+      name of the parameter for nav:get-metadata function: XPath-like
       
       {element-name}-{XYZ}
       {attribute-name}-{XYZ}
-      {element-name[attribute-name]-{XYZ}
+      {element-name[attribute-name]}-{XYZ}
       {element-name[attribute-name=attribute-value]}-{XYZ}
 
       {XYZ}:
       -{content} = content of the element
-      -{value} = valur of the attribute
+      -{value} = value of the attribute
       -{realisation} = either value of the attribute, or content of the element
       
     -->
