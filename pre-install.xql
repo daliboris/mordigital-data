@@ -27,13 +27,12 @@ declare function local:mkcol($collection, $path) {
     local:mkcol-recursive($collection, tokenize($path, "/")[. != ''])
 };
 
-(: store the collection configuration :)
+(: store the main collection configuration :)
 local:mkcol("/db/system/config",  $target),
+xdb:store-files-from-pattern(concat("/db/system/config", $target), $dir, "*.xconf"),
 (: store the dictionaries collection configuration :)
 local:mkcol("/db/system/config", concat($target, "/data/dictionaries")),
-(: xdb:store-files-from-pattern(concat("/db/system/config", $target), $dir, "*.xconf"), :)
 xdb:store-files-from-pattern(concat("/db/system/config", $target, "/data/dictionaries"), concat($dir, "/data/dictionaries"), "*.xconf"),
 (: store the about collection configuration :)
 local:mkcol("/db/system/config", concat($target, "/data/about")),
-(: xdb:store-files-from-pattern(concat("/db/system/config", $target), $dir, "*.xconf"), :)
 xdb:store-files-from-pattern(concat("/db/system/config", $target, "/data/about"), concat($dir, "/data/about"), "*.xconf")
