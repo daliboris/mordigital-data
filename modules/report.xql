@@ -4,8 +4,6 @@ declare namespace idx = "http://teilex0/ns/xquery/index";
 declare namespace cc="http://exist-db.org/collection-config/1.0";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 
-(:declare variable $idx:collection external := "/db/apps/lediir-data/data/dictionaries"; :)
-
 declare variable $idx:collection external := "/db/apps/mordigital-data/data/dictionaries";
 declare variable $idx:max-items external := 20; 
 
