@@ -12,6 +12,11 @@
     <permissions user="mordigital" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+        <change version="0.2.0">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>full-text index and indexing impovements (hierarchical index, code refactoring)</li>
+            </ul>
+        </change>        
         <change version="0.1.2">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>collection page for dictionaries and other texts</li>
