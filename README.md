@@ -42,13 +42,15 @@ After installing the **MORDigital Data** application an eXist-db library called 
 
 | Name | XPath | Note |
 | ---- | ----- |----- |
-|dictionary|`title[@type='main']`||
+|dictionary|`title[@type=('main', 'sub')][1]`||
 |objectLanguage|`orth/@xml:lang`||
 |pos|`gram[@type='pos']`||
 |polysemy|`count(sense)`||
 |entry-type|`entry/@type`||
 |attitude|`usg[@type='attitude']`||
 |domain|`usg[@type='domain']`||
+|domain-hierarchy|`usg[@type='domain']`||
+|domain-contemporary|`usg[@type='domain'][not(node())]`||
 |frequency|`usg[@type='frequency']`||
 |geographic|`usg[@type='geographic']`||
 |hint|`usg[@type='hint']`||
@@ -59,7 +61,7 @@ After installing the **MORDigital Data** application an eXist-db library called 
 |time|`usg[@type='time']`||
 |attestation|`bibl[@type='attestation']`||
 |attestation-author|`bibl[@type='attestation']/author`||
-|attestation-title|`bibl[@type=attestation]/title`||
+|attestation-title|`bibl[@type='attestation']/title`||
 |metamark|`metamark/@function`||
 
 ### Fileds used for the application functionality
@@ -70,7 +72,6 @@ After installing the **MORDigital Data** application an eXist-db library called 
 |letter|`head[@type='letter']`||
 |chapter-id|`chapter/@xml:id`||
 |chapter|`div[@type='letter']/@n`||
-
 
 ## Development
 
