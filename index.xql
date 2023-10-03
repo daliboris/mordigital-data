@@ -90,7 +90,7 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
             case "title[@type=main|full]-content"         return string-join((
                                                                $header//tei:msDesc/tei:head, 
                                                                $header//tei:titleStmt/(tei:title[@type = ('main', 'full')]|tei:title)[1]
-                                                               ), " - ")
+                                                               ) ! normalize-space(), " - ")
             case "gram[@type=pos]-content"                return idx:get-elements-realisation($root, $root//tei:gram[@type='pos'])
             case "orth[xml:lang]-content"                 return idx:get-object-language($root)
             case "cit|def[xml:lang]-content"              return idx:get-target-language($root)
@@ -174,18 +174,33 @@ declare function idx:get-all-values-from-taxonomy($root as document-node(), $tar
 };
 
 (:~
+ : Returns value of the element, value of `@norm` attribute
+:)
+declare function idx:get-elements-realisation-simple($entry as element(), $items as element()*) {
+    if($items) then
+        let $values := for $item in $items return ($item/@norm/data(), $item/data())
+        return $values
+    else
+    ()
+};
+
+(:~
  : Returns value of the element, value of `@norm` attribute, 
  value of taxonomy assigned to the element using `@ana` attribute.
 :)
 declare function idx:get-elements-realisation($entry as element(), $items as element()*) {
     if($items) then
-        let $values := for $item in $items return ($item/@norm/data(), $item/data())
+        let $values := idx:get-elements-realisation-simple($entry, $items)
         let $taxonomy := idx:get-values-from-taxonomy(root($entry),  $items[@ana]/@ana)
         return ($values, $taxonomy/data())
     else
     ()
 };
 
+(:~
+ : Returns values of the related terms in the taxonomy
+ : assigned to the element using `@ana` attribute.
+:)
 declare function idx:get-domain-hierarchy($entry as element()?, $targets as element()*) { 
 if (empty($entry)) then ()
 else
