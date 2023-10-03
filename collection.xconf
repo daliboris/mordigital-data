@@ -71,6 +71,7 @@
                 <facet dimension="attitude" expression="nav:get-metadata(., 'usg[@type=attitude]-realisation')"/>
                 <facet dimension="domain" expression="nav:get-metadata(., 'usg[@type=domain]-realisation')"/>
                 <facet dimension="domain-hierarchy" expression="nav:get-metadata(., 'usg[@type=domain]-hierarchy')"  hierarchical="yes" />
+                <facet dimension="domain-contemporary" expression="nav:get-metadata(., 'usg[@type=domain][not(node())]-hierarchy')"  hierarchical="yes" />
                 <facet dimension="frequency" expression="nav:get-metadata(., 'usg[@type=frequency]-realisation')"/>
                 <facet dimension="geographic" expression="nav:get-metadata(., 'usg[@type=geographic]-realisation')"/>
                 <facet dimension="hint" expression="nav:get-metadata(., 'usg[@type=hint]-realisation')"/>
