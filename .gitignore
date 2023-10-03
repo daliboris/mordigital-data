@@ -7,6 +7,9 @@ local.build.properties
 # worskapce file used by Visual Studio Code
 *.code-workspace
 
+# directory with settings used by Visual Studio
+.vs
+
 # directory with settings used by Visual Studio Code
 .vscode
 
