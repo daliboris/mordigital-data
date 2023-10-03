@@ -16,7 +16,7 @@
     <target name="xar"> <!-- Building the eXist-db module (with .xar extension)  -->
      <mkdir dir="${build.dir}" />
      <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="
-     ${build.dir} ${build.dir}/* 
+     ${build.dir} ${build.dir}/** 
      *.build.properties build.properties 
      .gitignore .existdb.json *.xstrc 
      *.code-workspace
