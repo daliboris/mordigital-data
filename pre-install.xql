@@ -1,4 +1,4 @@
-xquery version "1.0";
+xquery version "3.1";
 
 import module namespace xdb="http://exist-db.org/xquery/xmldb";
 
@@ -27,12 +27,19 @@ declare function local:mkcol($collection, $path) {
     local:mkcol-recursive($collection, tokenize($path, "/")[. != ''])
 };
 
-(: store the main collection configuration :)
 local:mkcol("/db/system/config",  $target),
-xdb:store-files-from-pattern(concat("/db/system/config", $target), $dir, "*.xconf"),
+xdb:store-files-from-pattern("/db/system/config" || $target, $dir, "**/*.xconf", "text/xml", true())
+(: store the main collection configuration :)
+(:)
+local:mkcol("/db/system/config",  $target),
+local:mkcol($target, "data/dictionaries"),
+local:mkcol($target, "data/about"),
+xdb:store-files-from-pattern("/db/system/config" || $target, $dir, "**/*.xconf", "text/xml", true())
+:)
+(:, :)
 (: store the dictionaries collection configuration :)
-local:mkcol("/db/system/config", concat($target, "/data/dictionaries")),
-xdb:store-files-from-pattern(concat("/db/system/config", $target, "/data/dictionaries"), concat($dir, "/data/dictionaries"), "*.xconf"),
+(: local:mkcol("/db/system/config", concat($target, "/data/dictionaries")), :)
+(: xdb:store-files-from-pattern(concat("/db/system/config", $target, "/data/dictionaries"), concat($dir, "/data/dictionaries"), "*.xconf"), :)
 (: store the about collection configuration :)
-local:mkcol("/db/system/config", concat($target, "/data/about")),
-xdb:store-files-from-pattern(concat("/db/system/config", $target, "/data/about"), concat($dir, "/data/about"), "*.xconf")
+(: local:mkcol("/db/system/config", concat($target, "/data/about")), :)
+(: xdb:store-files-from-pattern(concat("/db/system/config", $target, "/data/about"), concat($dir, "/data/about"), "*.xconf") :)

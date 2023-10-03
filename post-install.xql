@@ -82,7 +82,9 @@ declare function local:create-data-collection() {
 
 (: API needs dba rights for LaTeX :)
 
-local:create-data-collection()
+local:create-data-collection(),
+local:mkcol($config:data-root, "/dictionaries"),
+local:mkcol($config:data-root, "/about")
 
 (:
 sm:chgrp(xs:anyURI($target || "/modules/lib/api-dba.xql"), "dba"),
