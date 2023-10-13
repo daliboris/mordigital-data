@@ -18,8 +18,9 @@
      <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="
      ${build.dir} ${build.dir}/** 
      *.build.properties build.properties 
-     .gitignore .existdb.json *.xstrc 
+     .existdb.json *.xstrc 
      *.code-workspace
+     .vs .vs/**
      .vscode .vscode/**
      " />
      <!-- Creating copy of the latest version of the module with the fixed filename  -->
