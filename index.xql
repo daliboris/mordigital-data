@@ -131,10 +131,14 @@ declare function idx:get-genre($header as element()?) {
 : Returns classicication for the selected category (`$scheme`) used by TEI Publisher.
 :)
 declare function idx:get-classification($header as element()?, $scheme as xs:string) {
-    for $target in $header//tei:textClass/tei:catRef[@scheme="#" || $scheme]/@target
-    let $category := id(substring($target, 2), doc($idx:app-root || "/data/taxonomy.xml"))
-    return
-        $category/ancestor-or-self::tei:category[parent::tei:category]/tei:catDesc
+    let $taxonomy := doc($idx:app-root || "/data/taxonomy.xml")
+    return 
+        if(not(exists($taxonomy))) then () 
+    else
+        for $target in $header//tei:textClass/tei:catRef[@scheme="#" || $scheme]/@target
+        let $category := id(substring($target, 2), $taxonomy)
+        return
+            $category/ancestor-or-self::tei:category[parent::tei:category]/tei:catDesc
 };
 
 (:~
