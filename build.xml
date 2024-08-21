@@ -1,29 +1,91 @@
-<project name="mordigital-data" default="xar">
+<project name="${package(abbrev)}" default="xar">
     <xmlproperty file="expath-pkg.xml" />
+    <property name="data.version" value="" />
+    <property name="replace.token" value="tnlanno-data" />
     <property name="project.version" value="${package(version)}" /> <!-- Defined in expath-pkg.xml file -->
     <property name="project.app" value="${package(abbrev)}" /> <!-- Defined in expath-pkg.xml file -->
+    <property name="build" value="${basedir}/build" />
     <property name="build.dir" value="build" /> <!-- Name of the directory where the generated eXist-db module will be saved -->
+    <property name="app.build.dir" value="${build}/${project.app}-${project.version}" /> <!-- Name of the directory where the files for generating will be stored -->
     <!-- 
       Additional properties, if needed, can be defined 
       1) in this build.xml file
       2) in build.properties file and
       3) ovewritten/redefined in local.build.properties file 
     -->
+
+    <target name="test.if.version.is.set">
+      <condition property="version.is.set">
+          <length string="${data.version}" trim="true" when="greater" length="0"/>
+      </condition>
+    </target>
+
     <target name="clean"> <!-- Deleting build directory and its content -->
-        <echo message="Deleting ${build} directory" />
-        <delete dir="${build}" />
+      <echo message="Deleting ${app.build.dir} directory" />
+      <delete dir="${app.build.dir}" />
     </target>
-    <target name="xar"> <!-- Building the eXist-db module (with .xar extension)  -->
-     <mkdir dir="${build.dir}" />
-     <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="
-     ${build.dir} ${build.dir}/** 
-     *.build.properties build.properties 
-     .existdb.json *.xstrc 
-     *.code-workspace
-     .vs .vs/**
-     .vscode .vscode/**
-     " />
-     <!-- Creating copy of the latest version of the module with the fixed filename  -->
-     <copy file="${build.dir}/${project.app}-${project.version}.xar" tofile="${build.dir}/${project.app}.xar" overwrite="true"/>
+
+    <target name="prepare">
+      <mkdir dir="${build}" />
+      <mkdir dir="${app.build.dir}" />
+      <copy todir="${app.build.dir}">
+          <fileset dir="${basedir}">
+              <exclude name="${build.dir}" />
+              <exclude name="${build.dir}/**" />
+              <exclude name="*.build.properties" />
+              <exclude name=".github/**" />
+              <exclude name=".vs/**" />
+              <exclude name=".vscode/**" />
+              <exclude name="build.properties" />
+              <exclude name=".existdb.json" />
+              <exclude name="*.xstrc" />
+              <exclude name=".gitignore" />
+              <exclude name="*.code-workspace" />
+              <exclude name="local.*" />
+          </fileset>
+      </copy>
     </target>
+
+    <target name="xar" depends="xar-zip,xar-versions" /> <!-- Building the eXist-db module (with .xar extension)  -->
+
+    <target name="xar-complete" depends="clean,xar" /> 
+
+
+    <target name="xar-zip" depends="repo.prepare">
+      <mkdir dir="${build.dir}" />
+      <zip destfile="${build.dir}/${project.app}-${project.version}.xar">
+          <fileset dir=".">
+              <exclude name="${build.dir}" />
+              <exclude name="${build.dir}/**" />
+              <exclude name="*.build.properties" />
+              <exclude name=".github/**" />
+              <exclude name=".vs/**" />
+              <exclude name=".vscode/**" />
+              <exclude name="build.properties" />
+              <exclude name=".existdb.json" />
+              <exclude name="*.xstrc" />
+              <exclude name=".gitignore" />
+              <exclude name="*.code-workspace" />
+              <exclude name="local.*" />
+          </fileset>
+      </zip>
+      <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}.xar"/>
+  </target>
+
+  <target name="xar-versions" if="version.is.set"  depends="test.if.version.is.set">
+    <copy file="${build.dir}/${project.app}-${project.version}.xar" overwrite="true" tofile="${build.dir}/${project.app}-${data.version}.xar"/>
+</target>
+
+<target name="repo.prepare" depends="prepare">
+    <xslt style="${app.build.dir}/version.xsl" in="repo.xml" out="${app.build.dir}/repo.xml">
+     <param name="version" expression="${data.version}"/>
+    </xslt>
+    <xslt style="${app.build.dir}/version.xsl" in="expath-pkg.xml" out="${app.build.dir}/expath-pkg.xml">
+        <param name="version" expression="${data.version}"/>
+    </xslt>
+    <replace dir="${app.build.dir}/modules/" token="/${replace.token}/" value="/{$replace.token}-${data.version}/">
+        <include name="**/*.xq?"/>
+    </replace>
+</target>
+
 </project>
