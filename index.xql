@@ -34,13 +34,11 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
             case "title" return
                 string-join((
                     $header//tei:msDesc/tei:head, $header//tei:titleStmt/tei:title[@type = 'main'],
-                    $header//tei:titleStmt/tei:title,
-                    $root/dbk:info/dbk:title
+                    $header//tei:titleStmt/tei:title
                 ), " - ")
             case "author" return (
                 $header//tei:correspDesc/tei:correspAction/tei:persName,
-                $header//tei:titleStmt/tei:author,
-                $root/dbk:info/dbk:author
+                $header//tei:titleStmt/tei:author
             )
             case "language" return
                 head((
@@ -56,13 +54,10 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
                 $header//tei:publicationStmt/tei:date
             ))
             case "genre" return (
-                idx:get-genre($header),
-                root($root)//dbk:info/dbk:keywordset[@vocab="#genre"]/dbk:keyword,
-                root($root)//article-meta/kwd-group[@kwd-group-type="genre"]/kwd
+                idx:get-genre($header)
             )
             case "feature" return (
-                idx:get-classification($header, 'feature'),
-                $root/dbk:info/dbk:keywordset[@vocab="#feature"]/dbk:keyword
+                idx:get-classification($header, 'feature')
             )
             case "form" return (
                 idx:get-classification($header, 'form'),
@@ -75,6 +70,10 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
             case "content" return (
                 root($root)//body,
                 $root/dbk:section
+            )
+            case "place" return (
+                $root//tei:placeName/string(), 
+                $root//tei:name[@type="place"]/string()
             )
             
             case "sortKey-realisation"                    return if($root/@sortKey) 
@@ -98,7 +97,7 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
             case "gloss-content"                          return $root//tei:gloss
             case "entry[@type]-realisation"               return $root/@type
             case "usg[@type=attitude]-realisation"        return idx:get-elements-realisation($root, $root//tei:usg[@type='attitude'])
-            case "usg[@type=domain]-realisation"          return idx:get-elements-realisation($root, $root//tei:usg[@type='domain'])
+            case "usg[@type=domain]-realisation"          return idx:get-elements-realisation-simple($root, $root//tei:usg[@type='domain'])
             case "usg[@type=domain]-hierarchy"            return idx:get-domain-hierarchy($root, $root//tei:usg[@type='domain'])
             case "usg[@type=frequency]-realisation"       return idx:get-elements-realisation($root, $root//tei:usg[@type='frequency'])
             case "usg[@type=geographic]-realisation"      return idx:get-elements-realisation($root, $root//tei:usg[@type='geographic'])
