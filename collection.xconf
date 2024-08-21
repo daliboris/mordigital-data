@@ -50,6 +50,7 @@
                   -{hierarchy} = hierarchical values defined in the taxonomy or in the value itself (like date)
                   
                 -->
+                <field name="text" expression="." />
                 <field name="sortKey" expression="nav:get-metadata(., 'sortKey-realisation')"/>
                 <field name="letter" expression="nav:get-metadata(., 'head[@type=letter]-content')"/>
                 <field name="chapter-id" expression="nav:get-metadata(., 'chapter[@xml:id]-value')"/>
