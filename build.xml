@@ -1,7 +1,7 @@
 <project name="${package(abbrev)}" default="xar">
     <xmlproperty file="expath-pkg.xml" />
     <property name="data.version" value="" />
-    <property name="replace.token" value="tnlanno-data" />
+    <property name="replace.token" value="${package(abbrev)}" />
     <property name="project.version" value="${package(version)}" /> <!-- Defined in expath-pkg.xml file -->
     <property name="project.app" value="${package(abbrev)}" /> <!-- Defined in expath-pkg.xml file -->
     <property name="build" value="${basedir}/build" />
