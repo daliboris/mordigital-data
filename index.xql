@@ -3,6 +3,8 @@ xquery version "3.1";
 module namespace idx="http://teipublisher.com/index";
 
 declare namespace array = "http://www.w3.org/2005/xpath-functions/array";
+declare namespace map = "http://www.w3.org/2005/xpath-functions/map";
+
 
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace dbk="http://docbook.org/ns/docbook";
@@ -21,6 +23,28 @@ declare variable $idx:app-root :=
     ;
 
 declare variable $idx:default-metalanguage := 'en';
+
+declare variable $idx:taxonomy-root := collection($idx:app-root || "/data/metedata/");
+
+declare variable $idx:taxonomies := 
+    let $categories := $idx:taxonomy-root//tei:teiHeader//tei:taxonomy
+    return map:merge( for $category in $categories//tei:category
+        let $terms := map:merge(for $desc in $category/tei:catDesc return 
+              map {
+               $desc/@xml:lang/data() :
+               map {
+               "id" : $desc/tei:idno/data(),
+               "term" : $desc/tei:term/data()
+               }
+               }
+              )
+        return map 
+        { 
+            $category/@xml:id/data() :
+             $terms
+        }
+    )    
+  ;
 
 (:~
  : Helper function called from collection.xconf to create index fields and facets.
@@ -53,20 +77,6 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
                 $header//tei:fileDesc/tei:editionStmt/tei:edition/tei:date,
                 $header//tei:publicationStmt/tei:date
             ))
-            case "genre" return (
-                idx:get-genre($header)
-            )
-            case "feature" return (
-                idx:get-classification($header, 'feature')
-            )
-            case "form" return (
-                idx:get-classification($header, 'form'),
-                $root/dbk:info/dbk:keywordset[@vocab="#form"]/dbk:keyword
-            )
-            case "period" return (
-                idx:get-classification($header, 'period'),
-                $root/dbk:info/dbk:keywordset[@vocab="#period"]/dbk:keyword
-            )
             case "content" return (
                 root($root)//body,
                 $root/dbk:section
@@ -116,29 +126,6 @@ declare function idx:get-metadata($root as element(), $field as xs:string) {
                 ()
 };
 
-(:
-: Returns genre classicication used by TEI Publisher.
-:)
-declare function idx:get-genre($header as element()?) {
-    for $target in $header//tei:textClass/tei:catRef[@scheme="#genre"]/@target
-    let $category := id(substring($target, 2), doc($idx:app-root || "/data/taxonomy.xml"))
-    return
-        $category/ancestor-or-self::tei:category[parent::tei:category]/tei:catDesc
-};
-
-(:
-: Returns classicication for the selected category (`$scheme`) used by TEI Publisher.
-:)
-declare function idx:get-classification($header as element()?, $scheme as xs:string) {
-    let $taxonomy := doc($idx:app-root || "/data/taxonomy.xml")
-    return 
-        if(not(exists($taxonomy))) then () 
-    else
-        for $target in $header//tei:textClass/tei:catRef[@scheme="#" || $scheme]/@target
-        let $category := id(substring($target, 2), $taxonomy)
-        return
-            $category/ancestor-or-self::tei:category[parent::tei:category]/tei:catDesc
-};
 
 (:~
  : Returns the content of the taxonomy defined in the `<tei:catDesc>` element 
