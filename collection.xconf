@@ -10,11 +10,7 @@
                 <field name="date" expression="nav:get-metadata(ancestor::tei:TEI, 'date')"/>
                 <field name="file" expression="util:document-name(.)"/>
                 <field name="text" expression="."/>
-                <facet dimension="genre" expression="nav:get-metadata(ancestor::tei:TEI, 'genre')" hierarchical="yes"/>
                 <facet dimension="language" expression="nav:get-metadata(ancestor::tei:TEI, 'language')"/>
-                <facet dimension="feature" expression="nav:get-metadata(ancestor::tei:TEI, 'feature')"/>
-                <facet dimension="form" expression="nav:get-metadata(ancestor::tei:TEI, 'form')"/>
-                <facet dimension="period" expression="nav:get-metadata(ancestor::tei:TEI, 'period')"/>
             </text>
             <text qname="tei:div">
                 <!-- exclude nested divs which are indexed separately -->
@@ -59,6 +55,13 @@
                 <field name="definition" expression="nav:get-metadata(., 'def-content')"/>
                 <field name="example" expression="nav:get-metadata(., 'cit[@type=example]-content')"/>
                 <field name="pos" expression="nav:get-metadata(., 'gram[@type=pos]-content')"/>
+                <field name="attitude" expression="nav:get-metadata(., 'usg[@type=attitude]-realisation')"/>
+                <field name="domain" expression="nav:get-metadata(., 'usg[@type=domain]-realisation')"/>
+                <field name="socioCultural" expression="nav:get-metadata(., 'usg[@type=socioCultural]-realisation')"/>
+                <field name="textType" expression="nav:get-metadata(., 'usg[@type=textType]-realisation')"/>
+                <field name="time" expression="nav:get-metadata(., 'usg[@type=time]-realisation')"/>
+                <field name="attestation" expression="nav:get-metadata(., 'bibl[@type=attestation]-realisation')"/>
+
                 <facet dimension="dictionary" expression="nav:get-metadata(ancestor::tei:TEI, 'title[@type=main|full]-content')"/>
                 <facet dimension="objectLanguage" expression="nav:get-metadata(., 'orth[xml:lang]-content')"/>
                 <facet dimension="targetLanguage" expression="nav:get-metadata(., 'cit|def[xml:lang]-content')"/>
@@ -91,6 +94,14 @@
         </lucene>
         <range>
             <create qname="tei:term" type="xs:string"/>
-        </range>
+            <create qname="@type" type="xs:string"/>
+            <create qname="@subtype" type="xs:string"/>
+            <create qname="@xml:lang" type="xs:string"/>
+            <create qname="@class" type="xs:string"/>
+            <create qname="@ana" type="xs:string"/>
+            <create qname="@value" type="xs:string"/>
+            <create qname="@role" type="xs:string"/>
+            <create qname="@ident" type="xs:string"/>
+            <create qname="@n" type="xs:string"/>        </range>
     </index>
 </collection>
