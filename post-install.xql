@@ -80,12 +80,31 @@ declare function local:create-data-collection() {
 
 
 
-(: API needs dba rights for LaTeX :)
-
 local:create-data-collection(),
 local:mkcol($config:data-root, "/dictionaries"),
-local:mkcol($config:data-root, "/about")
+local:mkcol($config:data-root, "/volumes"),
+local:mkcol($config:data-root, "/about"),
+local:mkcol($config:data-root, "/metadata")
 
+
+(:
+declare function local:apply($directory as xs:string) {
+  let $directory-path := $data-path || "/" || $directory
+  let $created := xmldb:create-collection($target || $data-path, $directory)
+  let $col-mode := sm:chmod(xs:anyURI($target || $directory-path), $collection-mode)
+  let $own := sm:chown(xs:anyURI($target || $directory-path), $owner)
+  let $grp := sm:chgrp(xs:anyURI($target || $directory-path), $group)
+ return ($directory, $created, $col-mode, $own, $grp)
+};
+
+let $directories := ("dictionaries", "about", "metadata")
+
+for $directory in $directories
+ return local:apply($directory)
+
+:)
+
+(: API needs dba rights for LaTeX :)
 (:
 sm:chgrp(xs:anyURI($target || "/modules/lib/api-dba.xql"), "dba"),
 sm:chmod(xs:anyURI($target || "/modules/lib/api-dba.xql"), "rwxr-Sr-x"),
