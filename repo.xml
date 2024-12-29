@@ -12,6 +12,16 @@
     <permissions user="mordigital" group="tei" mode="rw-r--r--" />
     <deployed />
     <changelog>
+    <change version="0.5.0">
+            <ul xmlns="http://www.w3.org/1999/xhtml">
+                <li>landing page for dictionaries and project</li>
+                <li>index for whole volumes (plain text)</li>
+                <li>volumes and metadata subcollections</li>
+                <li>REST API for uploading, cleaning data and reports</li>
+                <li>build improvement (local copy in the build directory)</li>
+                <li>code reafactoring and cleaning</li>
+            </ul>
+        </change>
         <change version="0.4.0">
             <ul xmlns="http://www.w3.org/1999/xhtml">
                 <li>removing dependency on TEI Publisher Library</li>
